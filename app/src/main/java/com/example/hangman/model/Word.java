@@ -27,8 +27,8 @@ public class Word {
 
     // Method to check if the word has been guessed
     public boolean check4Victory() {
-        for (char c : displayWord) {
-            if (c == '_') {
+        for (int i = 0; i < displayWord.length; i++) {
+            if (displayWord[i] == '_') {
                 return false;
             }
         }
@@ -36,6 +36,7 @@ public class Word {
     }
 
     public String getDisplayWord() {
+
         return new String(this.displayWord);
     }
 }
