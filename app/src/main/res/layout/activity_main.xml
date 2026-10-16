@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hangman"
+        android:textColor="@color/design_default_color_primary"
+        android:textStyle="italic|bold"
+        android:textSize="30sp"
+        android:padding="20dp"
+        android:gravity="center"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        android:layout_gravity="center"
+        app:cardElevation="8dp">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:padding="20dp"
+            android:src="@drawable/hangman_stage_10"
+            tools:srcCompat="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="_ _ _ _ _ _ _"
+        android:textSize="30sp"
+        android:padding="15dp"
+        android:gravity="center"/>
+
+
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="center"
+        app:columnCount="6">
+
+        <Button android:id="@+id/btnA" android:text="A" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnB" android:text="B" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnC" android:text="C" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnD" android:text="D" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnE" android:text="E" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnF" android:text="F" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnG" android:text="G" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnH" android:text="H" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnI" android:text="I" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnJ" android:text="J" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnK" android:text="K" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnL" android:text="L" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnM" android:text="M" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnN" android:text="N" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnO" android:text="O" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnP" android:text="P" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnQ" android:text="Q" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnR" android:text="R" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnS" android:text="S" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnT" android:text="T" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnU" android:text="U" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnV" android:text="V" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnW" android:text="W" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnX" android:text="X" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnY" android:text="Y" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+        <Button android:id="@+id/btnZ" android:text="Z" android:layout_width="60dp" style="@style/HangmanLetterButton" />
+
+    </androidx.gridlayout.widget.GridLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRestart"
+
+        android:layout_gravity="center"
+        android:text="Restart"
+        />
+</LinearLayout>
