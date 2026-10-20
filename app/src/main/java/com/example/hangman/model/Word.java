@@ -39,4 +39,8 @@ public class Word {
 
         return new String(this.displayWord);
     }
+    public String getWord() {
+        return word;
+    }
+
 }

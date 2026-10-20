@@ -40,6 +40,7 @@
         android:id="@+id/tvWord"
         android:textSize="30sp"
         android:padding="15dp"
+        android:letterSpacing="0.3"
         android:gravity="center"/>
 
 

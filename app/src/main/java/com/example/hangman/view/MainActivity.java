@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.hangman.R;
+import com.example.hangman.ViewModel.GameViewModel;
 import com.example.hangman.model.Dictionary;
 import com.example.hangman.model.Word;
 
@@ -27,10 +28,12 @@ public class MainActivity extends AppCompatActivity implements GameView{
     private ImageView ivHangman;      // with the other data members
     private Drawable[] hungMan;       // the 10 images
     private Button btnRestart;          // with the other data members
+    private GameViewModel viewModel;
 
     private int testStage = 0;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements GameView{
         }
 
         ivHangman = findViewById(R.id.ivHangman);
-        ivHangman.setOnClickListener(this::testNextImage);
+        //ivHangman.setOnClickListener(this::testNextImage);
 
         //init hangMan image array
         hungMan = new Drawable[10];
@@ -67,19 +70,43 @@ public class MainActivity extends AppCompatActivity implements GameView{
                     getPackageName());
             hungMan[i] = getResources().getDrawable(resID, null);
         }
-        drawHungMan(0);
+        //drawHungMan(0);
 
         tvWord = findViewById(R.id.tvWord);
-        updateDisplayWord("DANA");
+        //updateDisplayWord("DANA");
 
         //unit tests
         testWord();
         testDictionary();
-        testUpdateLetters();
-    }
+        //testUpdateLetters();
 
-    // TEMPORARY - shows the next image on every tap on the image
-    private void testNextImage(View v) {
+        viewModel = new GameViewModel(this);
+        if (savedInstanceState != null) {
+            String word = savedInstanceState.getString("word");
+            int[] guessed = savedInstanceState.getIntArray("guessed");
+            viewModel.restore(word, guessed);
+            if (viewModel.getGameStatus() != 'P') {
+                disableKeyboard();
+            }
+        }
+
+    }
+    private void letterClick(View v) {
+        Button btn = (Button) v;
+        char c = btn.getText().toString().charAt(0);
+        viewModel.checkLetter(c);
+
+        char status = viewModel.getGameStatus();
+        if (status != 'P') {
+            disableKeyboard();
+        }
+        if (status == 'V') {
+            Toast.makeText(this, "You won!", Toast.LENGTH_SHORT).show();
+        } else if (status == 'L') {
+            Toast.makeText(this, "You lost", Toast.LENGTH_SHORT).show();
+        }
+    }
+        private void testNextImage(View v) {
         testStage++;
         if (testStage == 10) {
             testStage = 0;
@@ -88,10 +115,9 @@ public class MainActivity extends AppCompatActivity implements GameView{
     }
     // TEMPORARY version - in lesson 6 the body becomes viewModel.restart();
     private void restart(View v) {
-        drawHungMan(0);              // first image
-        updateLetters(new int[26]);  // all letters grey and clickable
-        updateDisplayWord("_____");  // a hidden 5-letter word
+        viewModel.restart();
     }
+
 
 
     private void testUpdateLetters()
@@ -104,24 +130,6 @@ public class MainActivity extends AppCompatActivity implements GameView{
         updateLetters(guessed);
 
     }
-
-    private void letterClick(View v) {
-        Button btn = (Button) v;
-
-        // הצגת האות בהודעת Toast
-        Toast.makeText(
-                this,
-                btn.getText().toString(),
-                Toast.LENGTH_SHORT
-        ).show();
-
-        // נטרול הכפתור לאחר הלחיצה
-        btn.setClickable(false);
-
-        // שינוי צבע הרקע לאדום
-        btn.setBackgroundColor(Color.RED);
-    }
-
 
     private static final String TAG = "WordTest";
 
@@ -158,6 +166,13 @@ public class MainActivity extends AppCompatActivity implements GameView{
         for (int i = 0; i < 26; i++) {
             abc[i].setClickable(false);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("word", viewModel.getWord());
+        outState.putIntArray("guessed", viewModel.getGuessed());
     }
 
 
