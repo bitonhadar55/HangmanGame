@@ -1,5 +1,6 @@
 package com.example.hangman.view;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,12 +20,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.hangman.R;
 import com.example.hangman.ViewModel.GameViewModel;
+import com.example.hangman.ViewModel.ScoreStorage;
 import com.example.hangman.model.Dictionary;
 import com.example.hangman.model.Word;
 
-public class MainActivity extends AppCompatActivity implements GameView{
+public class MainActivity extends AppCompatActivity implements GameView, ScoreStorage {
+    private SharedPreferences prefs;
     private Button[] abc = new Button['Z'-'A'+1];
-    private TextView tvWord;
+    private TextView tvWord, tvScore;
     private ImageView ivHangman;      // with the other data members
     private Drawable[] hungMan;       // the 10 images
     private Button btnRestart;          // with the other data members
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements GameView{
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        tvScore = findViewById(R.id.tvScore);
 
         btnRestart = findViewById(R.id.btnRestart);
         btnRestart.setOnClickListener(this::restart);
@@ -80,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements GameView{
         testDictionary();
         //testUpdateLetters();
 
-        viewModel = new GameViewModel(this);
+        prefs = getSharedPreferences("hangman", MODE_PRIVATE);
+        viewModel = new GameViewModel(this, this);
         if (savedInstanceState != null) {
             String word = savedInstanceState.getString("word");
             int[] guessed = savedInstanceState.getIntArray("guessed");
@@ -198,10 +204,27 @@ public class MainActivity extends AppCompatActivity implements GameView{
         }
     }
 
-
     @Override
     public void updateDisplayWord(String displayWord) {
         tvWord.setText(displayWord);
     }
+
+    @Override
+    public void updateScore(int wins, int losses) {
+        tvScore.setText("Wins: " + wins + "   Losses: " + losses);
+    }
+
+    @Override
+    public int loadWins() { return prefs.getInt("wins", 0); }
+
+    @Override
+    public int loadLosses() { return prefs.getInt("losses", 0); }
+
+    @Override
+    public void saveScore(int wins, int losses) {
+        prefs.edit().putInt("wins", wins)
+                .putInt("losses", losses).apply();
+    }
+
 }
 

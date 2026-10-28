@@ -17,12 +17,20 @@ public class GameViewModel {
     private String displayWord;     // e.g. "BA_A_A"
     private char status;            // 'P' playing, 'V' won, 'L' lost
     private int[] guessed;          // 26 cells: 0 / 1 / -1
+    private int wins = 0;
+    private int losses = 0;
+    private ScoreStorage storage;
 
-    public GameViewModel(GameView view) {
+
+    public GameViewModel(GameView view, ScoreStorage storage) {
         this.view = view;
+        this.storage = storage;
         this.dictionary = new Dictionary();
+        wins = storage.loadWins();            // load the saved score
+        losses = storage.loadLosses();
         restart();
     }
+
     public void restart() {
         current = new Word(dictionary.getRandomWord());
         misses = 0;
@@ -34,6 +42,7 @@ public class GameViewModel {
         view.drawHungMan(misses);
         view.updateLetters(guessed);
         view.updateDisplayWord(displayWord);
+        view.updateScore(wins, losses);
     }
 
     public boolean checkLetter(char c) {
@@ -45,15 +54,22 @@ public class GameViewModel {
             view.updateDisplayWord(displayWord);
             if (current.check4Victory()) {
                 status = 'V';
+                wins++;
             }
         } else {
             guessed[index] = -1;
             misses++;
             if (misses == MAX_MISSES) {
                 status = 'L';
+                losses++;
             }
             view.drawHungMan(misses);
         }
+        if (status != 'P') {                      // the game is over
+            storage.saveScore(wins, losses);
+        }
+
+        view.updateScore(wins, losses);
         view.updateLetters(guessed);             // in any case
         return found;
     }
@@ -89,6 +105,8 @@ public class GameViewModel {
         view.updateLetters(guessed);
         view.updateDisplayWord(displayWord);
     }
+
+
 
 }
 

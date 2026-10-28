@@ -18,6 +18,17 @@
         android:padding="20dp"
         android:gravity="center"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvScore"
+        android:text="Win:0  Losess:0"
+        android:textColor="@color/design_default_color_primary"
+        android:textStyle="italic|bold"
+        android:textSize="30sp"
+        android:padding="20dp"
+        android:gravity="center"/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

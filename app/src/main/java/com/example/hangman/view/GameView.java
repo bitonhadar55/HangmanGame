@@ -10,5 +10,7 @@ public interface GameView {
 
     // the word, with '_' for every letter not guessed yet
     void updateDisplayWord(String displayWord);
+
+    void updateScore(int wins, int losses);
 }
 
